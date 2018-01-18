@@ -1,6 +1,6 @@
 import * as Angular from "../module/angular.module";
 import * as Rx from "../module/rx.module"
-import {Network} from "../../provider/network";
+import {Network} from "../../manager/network";
 
 
 // Entity

@@ -1,6 +1,6 @@
 import * as Angular from "../core/module/angular.module";
 import * as Rx from "../core/module/rx.module"
-import {Network} from "../provider/network";
+import {Network} from "../manager/network";
 import {ActivatedRoute} from "@angular/router";
 
 // Entity
@@ -81,7 +81,8 @@ export class ConsultingComponent {
         </div>
       </mat-card>
     
-    </div>`
+    </div>
+  `
 })
 export class ConsultingChildComponent {
 

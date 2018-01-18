@@ -1,6 +1,6 @@
 import * as Angular from "./module/angular.module";
 import {FeatureModule} from "../feature/index";
-import {ProviderModule} from "../provider/index";
+import {ProviderModule} from "../manager/index";
 
 @Angular.Component({
   selector: 'app-root',

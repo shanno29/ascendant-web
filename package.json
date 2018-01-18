@@ -1,5 +1,7 @@
 {
-  "name": "ascendant",
+  "name": "ascendant-web",
+  "description": "Ascendant Web",
+  "author": "Matthew Shannon",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
@@ -38,6 +40,10 @@
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "^6.0.96",
+    "chai": "latest",
+    "codecov": "^3.0.0",
+    "coveralls": "latest",
+    "istanbul": "latest",
     "jasmine-core": "~2.8.0",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
@@ -46,7 +52,11 @@
     "karma-coverage-istanbul-reporter": "~1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "~0.2.2",
+    "mocha": "^3.5.3",
+    "nyc": "^11.4.1",
     "protractor": "~5.2.2",
+    "standard": "^10.0.3",
+    "supertest": "latest",
     "ts-node": "~4.0.2",
     "tslint": "~5.8.0"
   }

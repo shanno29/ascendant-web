@@ -1,6 +1,6 @@
 import * as Angular from "../core/module/angular.module";
 import * as Rx from "../core/module/rx.module"
-import {Network} from "../provider/network";
+import {Network} from "../manager/network";
 
 // Entity
 export interface AboutEntity {
@@ -9,6 +9,7 @@ export interface AboutEntity {
   subtitles: string[];
   texts: string[];
 }
+
 
 // Component
 @Angular.Component({
