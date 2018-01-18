@@ -1,0 +1,45 @@
+
+* { margin: 0 }
+
+html {
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  margin-left: 0;
+  margin-bottom: 0;
+}
+
+body {
+  background: #1565c0 url("http://localhost:3000/public/images/splash.jpg");
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: Roboto, sans-serif;
+  word-wrap: break-word;
+  text-align: center;
+  line-height: 32px;
+}
+
+mat-card {
+  margin: 24px auto !important;
+  margin-top: 96px !important;
+  margin-bottom: 96px !important;
+  width: 66%;
+}
+
+mat-card-header {
+  margin: 16px !important;
+}
+
+mat-card-title {
+  color: #1565c0 !important;
+  margin: 16px !important;
+}
+
+mat-card-subtitle {
+  color: #FFA500 !important;
+  margin: 16px !important;
+}
+
+mat-card-content {
+  margin: 16px !important;
+}
