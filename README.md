@@ -1,4 +1,4 @@
-# ascendant-web [![Build Status](https://travis-ci.org/shanno29/ascendant-web.svg?branch=master)] (https://travis-ci.org/shanno29/ascendant-web)
+# ascendant-web [![Build Status](https://travis-ci.org/shanno29/ascendant-web.svg?branch=master)](https://travis-ci.org/shanno29/ascendant-web)
 
 ## Development server
 
