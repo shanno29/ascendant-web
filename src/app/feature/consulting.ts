@@ -1,8 +1,7 @@
 import * as Angular from "../core/module/angular.module";
+import * as Rx from "../core/module/rx.module"
 import {Network} from "../provider/network";
-import {OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs/Observable";
 
 // Entity
 export interface ConsultingEntity {
@@ -13,13 +12,14 @@ export interface ConsultingEntity {
   texts: string[];
 }
 
+
 // Component
 @Angular.Component({
   selector: 'app-consulting',
   template: `
     <div id="consulting_container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center">
       
-      <mat-card *ngFor="let result of network.$consulting | async" routerLink="{{result.nav}}">
+      <mat-card *ngFor="let result of $consulting | async" routerLink="{{result.nav}}">
         
         <img mat-card-image src='{{result.image}}'>
         
@@ -51,8 +51,15 @@ export interface ConsultingEntity {
   `]
 })
 export class ConsultingComponent {
-  constructor(public network: Network){}
+
+  $consulting: Rx.Observable<ConsultingEntity[]>;
+
+  constructor(private network: Network){
+    this.$consulting = network.getRequest("/consulting")
+  }
+
 }
+
 
 // Child Component
 @Angular.Component({
@@ -61,7 +68,7 @@ export class ConsultingComponent {
     <div class="container">
       
       <mat-card>
-        <div *ngIf="$content | async as result" >
+        <div *ngIf="$consulting | async as result" >
           
           <mat-card-title>
             <h4>{{result.title}}</h4>
@@ -76,19 +83,18 @@ export class ConsultingComponent {
     
     </div>`
 })
-export class ConsultingChildComponent implements OnInit{
+export class ConsultingChildComponent {
 
-  public $content: Observable<ConsultingEntity>;
+  $consulting: Rx.Observable<ConsultingEntity>;
 
-  constructor(public route: ActivatedRoute, public network: Network) {}
-
-  ngOnInit() {
+  constructor(public route: ActivatedRoute, public network: Network) {
     this.route.params.subscribe(params => {
-      this.$content = this.network.$consultingByName(params['id'])
+      this.$consulting = this.network.getRequest(`/consulting/${params['id']}`);
     })
-
   }
+
 }
+
 
 // Module
 @Angular.NgModule({

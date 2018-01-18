@@ -1,5 +1,7 @@
 import * as Angular from "../module/angular.module";
+import * as Rx from "../module/rx.module"
 import {Network} from "../../provider/network";
+
 
 // Entity
 export interface ToolbarEntity {
@@ -19,7 +21,7 @@ export interface ToolbarEntity {
 @Angular.Component({
   selector: 'toolbar-view',
   template: `
-    <mat-toolbar id="container" *ngIf="network.$toolbar | async as result">
+    <mat-toolbar id="container" *ngIf="$toolbar | async as result">
       
       <!-- Logo -->
       <img id="logo-image" src="{{result.logo}}" routerLink="{{result.link}}" routerLinkActive="active">
@@ -84,8 +86,15 @@ export interface ToolbarEntity {
   `],
 })
 export class ToolbarComponent {
-  constructor(public network: Network){}
+
+  $toolbar: Rx.Observable<ToolbarEntity>;
+
+  constructor(private network: Network) {
+    this.$toolbar = network.getRequest("/toolbar");
+  }
+
 }
+
 
 // Module
 @Angular.NgModule({
@@ -94,3 +103,4 @@ export class ToolbarComponent {
   exports: [ToolbarComponent],
 })
 export class ToolbarModule {}
+

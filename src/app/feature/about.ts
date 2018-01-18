@@ -1,4 +1,5 @@
 import * as Angular from "../core/module/angular.module";
+import * as Rx from "../core/module/rx.module"
 import {Network} from "../provider/network";
 
 // Entity
@@ -15,7 +16,7 @@ export interface AboutEntity {
   template: `
     <div class="container">
       <mat-card>
-        <div *ngFor="let result of network.$about | async">
+        <div *ngFor="let result of $about | async">
           
           <mat-card-title>
             <h4 *ngFor="let title of result.titles">{{title}}</h4>
@@ -34,7 +35,13 @@ export interface AboutEntity {
     </div>`,
 })
 export class AboutComponent {
-  constructor(public network: Network) {}
+
+  $about: Rx.Observable<AboutEntity[]>;
+
+  constructor(private network: Network) {
+    this.$about = network.getRequest("/about");
+  }
+
 }
 
 

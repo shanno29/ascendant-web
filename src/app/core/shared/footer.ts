@@ -1,6 +1,6 @@
 import * as Angular from "../module/angular.module";
+import * as Rx from "../module/rx.module"
 import {Network} from "../../provider/network";
-
 
 // Entity
 export interface FooterEntity {
@@ -25,7 +25,7 @@ export interface FooterEntity {
 @Angular.Component({
   selector: 'footer-view',
   template: `    
-    <div id="container" *ngIf="network.$footer | async as result" fxLayout="row" fxLayoutWrap="wrap">
+    <div id="container" *ngIf="$footer | async as result" fxLayout="row" fxLayoutWrap="wrap">
 
       <!-- Info Sections -->
       <div id="section" *ngFor="let item of result.items">
@@ -60,7 +60,13 @@ export interface FooterEntity {
   `]
 })
 export class FooterComponent {
-  constructor(public network: Network){}
+
+  $footer: Rx.Observable<FooterEntity>;
+
+  constructor(private network: Network) {
+    this.$footer = network.getRequest("/footer");
+  }
+
 }
 
 

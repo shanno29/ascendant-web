@@ -1,4 +1,5 @@
 import * as Angular from "../core/module/angular.module";
+import * as Rx from "../core/module/rx.module"
 import {Network} from "../provider/network";
 
 
@@ -10,6 +11,7 @@ export interface HomeEntity {
   texts: string[];
 }
 
+
 // Component
 @Angular.Component({
   selector: 'app-home',
@@ -17,7 +19,7 @@ export interface HomeEntity {
     <div class="container">
       
       <mat-card>
-        <div *ngFor="let result of network.$home | async">
+        <div *ngFor="let result of $home | async">
           
           <mat-card-title>
             <h4 *ngFor="let title of result.titles">{{title}}</h4>
@@ -38,7 +40,13 @@ export interface HomeEntity {
   `
 })
 export class HomeComponent {
-  constructor(public network: Network) {}
+
+  $home: Rx.Observable<HomeEntity[]>;
+
+  constructor(private network: Network) {
+    this.$home = network.getRequest("/home");
+  }
+
 }
 
 

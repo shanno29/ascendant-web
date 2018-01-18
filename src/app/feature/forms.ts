@@ -1,4 +1,5 @@
 import * as Angular from "../core/module/angular.module";
+import * as Rx from "../core/module/rx.module"
 import {Network} from "../provider/network";
 
 
@@ -18,7 +19,7 @@ export interface FormsEntity {
     <div class="container">
 
       <mat-card>
-        <div *ngFor="let result of network.$forms | async">
+        <div *ngFor="let result of $forms | async">
 
           <mat-card-title>
             <h4 *ngFor="let title of result.titles">{{title}}</h4>
@@ -35,10 +36,16 @@ export interface FormsEntity {
         </div>
       </mat-card>
 
-    </div>`
+    </div>
+  `
 })
 export class FormsComponent {
-  constructor(public network: Network){}
+
+  $forms: Rx.Observable<FormsEntity[]>;
+
+  constructor(private network: Network){
+    this.$forms = network.getRequest("/forms")
+  }
 }
 
 
