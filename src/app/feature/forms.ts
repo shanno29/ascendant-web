@@ -1,62 +1,34 @@
-import * as Angular from "../core/module/angular.module";
-import * as Rx from "../core/module/rx.module"
-import {Network} from "../manager/network";
+import {Network} from '../core/network';
+import {CardModel} from '../core/shared/card';
+import {Component, NgModule} from '@angular/core';
+import {MaterialModule} from '../core/shared/material';
+import {Observable} from 'rxjs/Observable';
+import {RouterModule} from '@angular/router';
 
 
-// Forms
-export interface FormsEntity {
-  id: number;
-  titles: string[];
-  subtitles: string[];
-  texts: string[];
-}
-
-
-// Component
-@Angular.Component({
+@Component({
   selector: 'app-forms',
   template: `
-    <div class="container">
-
-      <mat-card>
-        <div *ngFor="let result of $forms | async">
-
-          <mat-card-title>
-            <h4 *ngFor="let title of result.titles">{{title}}</h4>
-          </mat-card-title>
-
-          <mat-card-subtitle>
-            <h2 *ngFor="let subtitle of result.subtitles">{{subtitle}}</h2>
-          </mat-card-subtitle>
-
-          <mat-card-content>
-            <p *ngFor="let text of result.texts">{{text}}</p>
-          </mat-card-content>
-
-        </div>
-      </mat-card>
-
-    </div>
+		<div class="container">
+			<app-card *ngFor="let model of model$ | async" [model]=model></app-card>
+		</div>
   `
 })
 export class FormsComponent {
+  model$: Observable<CardModel[]>;
 
-  $forms: Rx.Observable<FormsEntity[]>;
-
-  constructor(private network: Network){
-    this.$forms = network.getRequest("/forms")
+  constructor(public network: Network) {
+    this.model$ = this.network.get('/forms');
   }
 }
 
 
-// Module
-@Angular.NgModule({
+@NgModule({
   declarations: [FormsComponent],
-  imports: [
-    Angular.MaterialModule,
-    Angular.RouterModule.forChild([
-      {path: 'forms', component: FormsComponent, data: {state: 'forms'}}
-    ])
-  ],
+  imports: [MaterialModule, FormsModule.routes],
 })
-export class FormsModule {}
+export class FormsModule {
+  static routes = RouterModule.forChild([
+    {path: 'forms', component: FormsComponent}
+  ]);
+}

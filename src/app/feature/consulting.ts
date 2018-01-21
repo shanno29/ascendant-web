@@ -1,111 +1,95 @@
-import * as Angular from "../core/module/angular.module";
-import * as Rx from "../core/module/rx.module"
-import {Network} from "../manager/network";
-import {ActivatedRoute} from "@angular/router";
+import {Network} from '../core/network';
+import {ActivatedRoute, RouterModule} from '@angular/router';
+import {Component, NgModule} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
+import {MaterialModule} from '../core/shared/material';
+import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
-// Entity
-export interface ConsultingEntity {
+
+export interface ConsultingModel {
   id: number;
-  nav: string;
-  title: string;
-  image: string;
+  titles: string[];
+  images: string[];
   texts: string[];
 }
 
 
-// Component
-@Angular.Component({
+@Component({
   selector: 'app-consulting',
   template: `
-    <div id="consulting_container" fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center">
-      
-      <mat-card *ngFor="let result of $consulting | async" routerLink="{{result.nav}}">
+		<div fxLayout="row" fxLayoutWrap="wrap" fxLayoutAlign="center" >
+
+			<mat-card *ngFor="let model of model$ | async" routerLink="{{model.id}}">
+
+				<img mat-card-image *ngFor="let image of model.images" [src]=sanitize(image)>
+
+				<mat-card-title>
+					<h5 *ngFor="let title of model.titles">{{title}}</h5>
+				</mat-card-title>
         
-        <img mat-card-image src='{{result.image}}'>
-        
-        <mat-card-title>
-          <h6>{{result.title}}</h6>
-        </mat-card-title>
-        
-      </mat-card>
+			</mat-card>
+
+		</div>
+  `,
+  styles: [`
     
-    </div>`,
-  styles: [`    
-    
-    #consulting_container {
-      flex: 1;
-      margin-top: 72px !important;
-      margin-bottom: 72px !important;
-    }
     
     mat-card {
-      margin: 24px !important;
-      height: 260px;
-      width: 260px;
+        height: 240px;
+        width: 240px;
+        margin-left: 24px;
+        margin-right: 24px;
+        margin-bottom: 48px;
+        line-height: 24px;
     }
-    
+
     img {
-      height: 200px;
+        height: 200px;
     }
-    
+
   `]
 })
 export class ConsultingComponent {
+  model$: Observable<ConsultingModel[]>;
 
-  $consulting: Rx.Observable<ConsultingEntity[]>;
-
-  constructor(private network: Network){
-    this.$consulting = network.getRequest("/consulting")
+  constructor(private network: Network, private sanitizer: DomSanitizer) {
+    this.model$ = network.get('/consulting');
   }
 
+  sanitize(image: string): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustUrl(`${image}`);
+  }
 }
 
 
-// Child Component
-@Angular.Component({
+@Component({
   selector: 'app-consulting-child-view',
-  template: `
+  template: `    
     <div class="container">
-      
-      <mat-card>
-        <div *ngIf="$consulting | async as result" >
-          
-          <mat-card-title>
-            <h4>{{result.title}}</h4>
-          </mat-card-title>
-          
-          <mat-card-content>
-            <p *ngFor="let text of result.texts">{{text}}</p>
-          </mat-card-content>
-        
-        </div>
-      </mat-card>
-    
+      <app-card *ngIf="model$ | async as model" [model]=model></app-card>
     </div>
   `
 })
 export class ConsultingChildComponent {
 
-  $consulting: Rx.Observable<ConsultingEntity>;
+  model$: Observable<ConsultingModel>;
 
   constructor(public route: ActivatedRoute, public network: Network) {
     this.route.params.subscribe(params => {
-      this.$consulting = this.network.getRequest(`/consulting/${params['id']}`);
-    })
+      this.model$ = this.network.get(`/consulting/${params['id']}`);
+    });
   }
 
 }
 
 
-// Module
-@Angular.NgModule({
+@NgModule({
   declarations: [ConsultingComponent, ConsultingChildComponent],
-  imports: [
-    Angular.MaterialModule,
-    Angular.RouterModule.forChild([
-      {path: 'consulting', component: ConsultingComponent, data: {state: 'consulting'}},
-      {path: 'consulting/:id', component: ConsultingChildComponent, data: {state: 'child'}}
-    ])
-  ],
+  imports: [MaterialModule, ConsultingModule.routes],
 })
-export class ConsultingModule {}
+export class ConsultingModule {
+  static routes =  RouterModule.forChild([
+    {path: 'consulting', component: ConsultingComponent},
+    {path: 'consulting/:id', component: ConsultingChildComponent}
+  ]);
+}

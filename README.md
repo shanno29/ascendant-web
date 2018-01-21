@@ -1,18 +1,31 @@
-# ascendant-web [![Build Status](https://travis-ci.org/shanno29/ascendant-web.svg?branch=master)](https://travis-ci.org/shanno29/ascendant-web)
+# ascendant-web 
 
-## Development server
+## Prerequisites
+* Angular CLI
+* Node.js 9
+* NPM
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Setup
+1. Run `git clone -b master https://github.com/shanno29/ascendant-web.git`
+2. Run `npm install`
+3. Config `apiHost` and `apiPort` in `/src/app/_config/config.ts`  
+
+## Running
+1. Run `ng serve` defaults to `http://localhost:4200`
+1. Run `ng serve --host http://www.exampleWeb.com --port 4200`
+2. Navigate to `http://host:port/`, you should see "Hello From Ascendant"
+
+## Tests & Coverage
+1. Run `npm test`
+2. Run `npm start --host http://www.example.com --port 4200`
+3. Navigate to `http://host:port/coverage`
 
 ## Build
+1. Run `ng build --prod --sourcemaps` to build the project. The build artifacts will be stored in the `dist/` directory. 
+2. Replace `/` with `./` in `/dist/index.html`
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
+## Changelog
+See the [commit page](https://github.com/shanno29/ascendant-api/commits/master)
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
+## License
+[MIT](LICENSE)

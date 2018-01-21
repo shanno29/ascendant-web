@@ -2,8 +2,8 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import {FlexLayoutModule} from "@angular/flex-layout";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {FlexLayoutModule} from '@angular/flex-layout';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatButtonModule,
   MatCardModule,
@@ -14,12 +14,13 @@ import {
   MatListModule,
   MatMenuModule,
   MatProgressBarModule,
+  MatProgressSpinnerModule,
   MatRadioModule,
   MatSidenavModule,
   MatTabsModule,
-  MatToolbarModule,
+  MatToolbarModule
 } from '@angular/material';
-
+import {CardModule} from './card';
 
 @NgModule({
   imports: [
@@ -41,6 +42,8 @@ import {
     MatListModule,
     MatGridListModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
+    CardModule
   ],
   exports: [
     FlexLayoutModule,
@@ -61,8 +64,8 @@ import {
     MatListModule,
     MatGridListModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
+    CardModule
   ]
 })
-export class MaterialModule {
-
-}
+export class MaterialModule {}

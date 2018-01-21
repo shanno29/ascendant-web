@@ -1,59 +1,34 @@
-import * as Angular from "../core/module/angular.module";
-import * as Rx from "../core/module/rx.module"
-import {Network} from "../manager/network";
-
-// Entity
-export interface AboutEntity {
-  id: number;
-  titles: string[];
-  subtitles: string[];
-  texts: string[];
-}
+import {CardModel} from '../core/shared/card';
+import {Network} from '../core/network';
+import {Component, NgModule} from '@angular/core';
+import {MaterialModule} from '../core/shared/material';
+import {RouterModule} from '@angular/router';
+import {Observable} from 'rxjs/Observable';
 
 
-// Component
-@Angular.Component({
+@Component({
   selector: 'app-about',
   template: `
     <div class="container">
-      <mat-card>
-        <div *ngFor="let result of $about | async">
-          
-          <mat-card-title>
-            <h4 *ngFor="let title of result.titles">{{title}}</h4>
-          </mat-card-title>
-          
-          <mat-card-subtitle>
-            <h2 *ngFor="let subtitle of result.subtitles">{{subtitle}}</h2>
-          </mat-card-subtitle>
-          
-          <mat-card-content>
-            <p *ngFor="let body of result.texts">{{body}}</p>
-          </mat-card-content>
-          
-        </div>
-      </mat-card>
-    </div>`,
+      <app-card *ngFor="let model of model$ | async" [model]=model></app-card>
+    </div>
+  `
 })
 export class AboutComponent {
-
-  $about: Rx.Observable<AboutEntity[]>;
+  model$: Observable<CardModel>;
 
   constructor(private network: Network) {
-    this.$about = network.getRequest("/about");
+    this.model$ = this.network.get('/about');
   }
-
 }
 
 
-// Module
-@Angular.NgModule({
+@NgModule({
   declarations: [AboutComponent],
-  imports: [
-    Angular.MaterialModule,
-    Angular.RouterModule.forChild([
-      {path: 'about', component: AboutComponent, data: {state: 'about'}}
-    ])
-  ],
+  imports: [MaterialModule, AboutModule.routes],
 })
-export class AboutModule {}
+export class AboutModule {
+  static routes = RouterModule.forChild([
+    {path: 'about', component: AboutComponent}
+  ]);
+}
