@@ -9,9 +9,11 @@ import {RouterModule} from '@angular/router';
 @Component({
   selector: 'app-home',
   template: `
-		<div class="container">
+		
+    <div class="container">
 			<app-card *ngFor="let model of model$ | async" [model]=model></app-card>
 		</div>
+    
   `
 })
 export class HomeComponent {

@@ -1,6 +1,7 @@
-import {Component, Input, NgModule} from '@angular/core';
+import {Component, Directive, Input, NgModule, OnInit, TemplateRef, ViewContainerRef} from '@angular/core';
 import {MatCardModule} from '@angular/material';
 import {CommonModule} from '@angular/common';
+
 
 
 export interface CardModel {
@@ -27,10 +28,13 @@ export interface CardModel {
 			</mat-card-subtitle>
       
 			<mat-card-content>
-				<p *ngFor="let text of model.texts" class="spaced">{{text}}</p>
+				<p *ngFor="let text of model.texts">{{text}}</p>
       </mat-card-content>
       
 		</mat-card>
+
+		
+
   `,
 })
 export class CardComponent {
@@ -45,3 +49,30 @@ export class CardComponent {
 })
 export class CardModule {}
 
+
+
+
+
+
+// @Component({
+//   selector: 'app-container',
+//   template: `
+//
+//     <ng-template #defaultTabButtons>
+//         <div class="default-tab-buttons">
+//
+//         </div>
+//     </ng-template>
+//
+// 		<ng-template #headerTemplate>
+// 			<div class="default-tab-buttons">
+//
+// 			</div>
+// 		</ng-template>
+//
+//     <ng-container *ngTemplateOutlet="headerTemplate ? headerTemplate: defaultTabButtons"> </ng-container>
+//   `
+// })
+// export class TabContainerComponent {
+//   @Input() headerTemplate: TemplateRef<any>;
+// }

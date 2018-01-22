@@ -2,7 +2,6 @@ import {Network} from '../../core/network';
 import {Observable} from 'rxjs/Observable';
 import {Component} from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
-import {FooterModel} from './footer';
 import {BrowserModule} from '@angular/platform-browser';
 import {MaterialModule} from '../../core/shared/material';
 import {RouterModule} from '@angular/router';
@@ -10,15 +9,13 @@ import {NgModule} from '@angular/core';
 import {FeatureModule} from '../index';
 import {NetworkModule} from '../../core/network';
 import {FooterModule} from './footer';
-import {ToolbarModel, ToolbarModule} from './toolbar';
+import {ToolbarModule} from './toolbar';
 import {OverlayContainer} from '@angular/cdk/overlay';
 
 
 export interface RootModel {
   color: string;
   splash: string;
-  toolbar: ToolbarModel;
-  footer: FooterModel;
 }
 
 
