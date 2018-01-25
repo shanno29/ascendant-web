@@ -75,7 +75,7 @@ export class RootModule {
     {path: 'forms', loadChildren: 'app/feature/forms#FormsModule'},
     {path: 'contact', loadChildren: 'app/feature/contact#ContactModule'},
     {path: 'consulting', loadChildren: 'app/feature/consulting#ConsultingModule'},
-  ]);
+  ], { useHash: true } );
 
 }
 
